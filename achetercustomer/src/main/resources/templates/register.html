@@ -1,0 +1,113 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/fullpagelayout.html}">
+
+<head>
+	<title>Customer Registration</title>
+</head>
+
+<th:block layout:fragment="breadcrum">
+	<div class="page-header" th:style="@{background: ~/assets/img/banner1.jpg;}">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="breadcrumb-wrapper">
+						<h2 class="product-title">Join Us</h2>
+						<ol class="breadcrumb">
+							<li><a th:href="@{~/acheter-home}">Home /</a></li>
+							<li class="current">Register</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+
+<th:block layout:fragment="pagecontent">
+	<section class="register section-padding">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-5 col-md-12 col-xs-12">
+					<div class="register-form login-area">
+						<h3>
+							Customer Registration
+						</h3>
+						<form class="login-form" th:action="@{/customer/register}" method="post" th:object="${customerRegistrationForm}"> <!--This Object is used to retain the data previously entered by the user in case od validation errors-->
+							<div class="form-group">
+								<div class="input-icon">
+									<i class="lni-user"></i>
+									<input type="email" id="emailAddress" class="form-control" name="emailAddress"
+										placeholder="Email Address" th:field=*{emailAddress} maxlength="50">
+									<p class="alert alert-danger" th:errors="*{emailAddress}" th:if="${#fields.hasErrors('emailAddress')}"}>&nbsp;</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="input-icon">
+									<i class="lni-comments"></i>
+									<input type="text" id="firstName" class="form-control" name="firstName"
+										placeholder="FirstName" th:field="*{firstName}" maxlength="50">
+									<p class="alert alert-danger" th:errors="*{firstName}" th:if="${#fields.hasErrors('firstName')}"}>&nbsp;</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="input-icon">
+									<i class="lni-comments"></i>
+									<input type="text" id="lastName" class="form-control" name="lastName"
+										placeholder="LastName" th:field="*{lastName}" maxlength="50">
+									<p class="alert alert-danger" th:errors="*{lastName}" th:if="${#fields.hasErrors('lastName')}"}>&nbsp;</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="input-icon">
+									<i class="lni-shortcode"></i>
+									<input type="text" id="displayName" class="form-control" name="displayName"
+										placeholder="Display Name" th:field="*{displayName}" maxlength="12">
+									<p class="alert alert-danger" th:errors="*{displayName}" th:if="${#fields.hasErrors('displayName')}"}>&nbsp;</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="input-icon">
+									<i class="lni-mobile"></i>
+									<input type="text" id="mobileNo" class="form-control" name="mobileNo"
+										placeholder="Mobile Number" th:field="*{mobileNo}" maxlength="13">
+									<p class="alert alert-danger" th:errors="*{mobileNo}" th:if="${#fields.hasErrors('mobileNo')}"}>&nbsp;</p>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<div class="input-icon">
+									<i class="lni-lock"></i>
+									<input type="password" class="form-control" id="password" name="password" placeholder="Password" maxlength="50">
+									<p class="alert alert-danger" th:errors="*{password}" th:if="${#fields.hasErrors('password')}"}>&nbsp;</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="input-icon">
+									<i class="lni-lock"></i>
+									<input type="password" class="form-control" id="reTypePassword" name="reTypePassword" placeholder="Retype Password" maxlength="50">
+									<p class="alert alert-danger" th:errors="*{reTypePassword}" th:if="${#fields.hasErrors('reTypePassword')}"}>&nbsp;</p>
+								</div>
+							</div>
+							
+							<div class="form-group mb-3">
+								<div class="custom-control custom-checkbox">
+									<input type="checkbox" class="custom-control-input" id="termsAndConditions" name="termsAndConditions" th:field="*{termsAndConditions}" value="1">									
+									<label class="custom-control-label" for="termsAndConditions">By registering, you accept our
+										Terms & Conditions</label>
+									<p class="alert alert-danger" th:errors="*{termsAndConditions}" th:if="${#fields.hasErrors('termsAndConditions')}"}>&nbsp;</p>										
+								</div>
+							</div>
+							<div class="text-center">
+								<button class="btn btn-common log-btn">Register</button>
+								<button class="btn btn-danger">Cancel</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</th:block>
+
+</html>

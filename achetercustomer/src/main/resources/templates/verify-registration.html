@@ -1,0 +1,48 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/fullpagelayout.html}">
+
+<head>
+	<title>Customer Registration Success</title>
+</head>
+
+
+<th:block layout:fragment="breadcrum">
+	<div class="page-header" th:style="@{background: ~/assets/img/banner1.jpg;}">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="breadcrumb-wrapper">
+						<h2 class="product-title">Registration Success</h2>
+						<ol class="breadcrumb">
+							<li><a th:href="@{~/acheter-home}">Home /</a></li>
+							<li class="current">Registration Success</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+
+<th:block layout:fragment="pagecontent">
+	<section class="section-padding">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-12 col-md-12 col-xs-12">
+					<div class="forgot login-area">
+						<h3>
+							Registration Success
+						</h3>
+						You have register successfully withus, we have sent an verification link to your email address <span
+							th:text="${verificationEmailAddress}">verification email address</span> and an otp to your
+						mobile number <span th:text="${verificationMobileNo}">otp</span>. please complete your verification to login into your account.
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</th:block>
+
+
+</html>

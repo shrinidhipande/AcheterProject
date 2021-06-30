@@ -1,0 +1,15 @@
+spring:
+  mvc:
+    static-path-pattern: /assets/**
+    
+accountService:
+  url: http://localhost:8081/account/
+  
+logging:
+  file:
+    path: /var/log/acheter
+    name: ${logging.file.path}/achetercustomer.out
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} - [%thread] - %-5level - %logger{36} - %msg%n"
+      

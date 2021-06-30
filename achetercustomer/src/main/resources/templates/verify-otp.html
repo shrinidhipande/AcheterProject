@@ -1,0 +1,66 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/fullpagelayout.html}">
+
+<head>
+	<title>Verify OTP</title>
+</head>
+
+<th:block layout:fragment="breadcrum">
+	<div class="page-header" th:style="@{background: ~/assets/img/banner1.jpg;}">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="breadcrumb-wrapper">
+						<h2 class="product-title">Forgot Password</h2>
+						<ol class="breadcrumb">
+							<li><a th:href="@{~/login}">Login /</a></li>
+							<li class="current">Forgot Password Verify OTP</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+
+<th:block layout:fragment="pagecontent">
+	<section class="register section-padding">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-5 col-md-12 col-xs-12">
+					<div class="register-form login-area">
+						<h3>
+							Verify OTP 
+						</h3>
+
+						<form class="login-form" th:object="${verifyOtpForm}" th:action="@{/customer/forgotpassword/verifyOTP}" method="post">
+							<input type="hidden" name="userAccountNo" th:field="*{userAccountNo}"/>
+							<div class="form-group">
+								<div class="input-icon">
+									We have sent an OTP to the Mobile Number: <span th:text="${verificationMobileNo}">mobileno</span>. please enter the OTP received to reset the password.
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="input-icon">
+									<i class="lni-mobile"></i>
+									<input type="text" id="otp" class="form-control" name="otp"
+										placeholder="OTP" maxlength="13">
+									<p class="alert alert-danger" th:errors="*{otp}" th:if="${#fields.hasErrors('otp')}"}>&nbsp;</p>																												
+								</div>
+							</div>
+							
+							<div class="text-center">
+								<button class="btn btn-primary log-btn">Verify</button>
+								<a class="btn btn-danger" th:href="@{/login}">Cancel</a>
+							</div>
+						</form>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</th:block>
+
+</html>
