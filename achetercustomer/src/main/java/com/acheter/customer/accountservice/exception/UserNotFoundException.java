@@ -1,4 +1,4 @@
- package com.acheter.customer.accountservice.exception;
+package com.acheter.customer.accountservice.exception;
 
 public class UserNotFoundException extends AccountServiceException {
 	private static final long serialVersionUID = -21583039142563324L;

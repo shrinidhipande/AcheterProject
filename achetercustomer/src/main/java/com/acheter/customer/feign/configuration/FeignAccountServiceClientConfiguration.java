@@ -16,4 +16,10 @@ public class FeignAccountServiceClientConfiguration {
 		return new AccountServiceExceptionDecoder();
 	}
 
+	@Bean
+	public BasicAuthRequestInterceptor basicAuthenticationRequestInterceptor(
+			@Value("${accountService.apiKey}") String apiKey, @Value("${accountService.secret}") String secret) {
+		return new BasicAuthRequestInterceptor(apiKey, secret);
+	}
+
 }

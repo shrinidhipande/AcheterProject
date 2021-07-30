@@ -13,8 +13,6 @@ import com.acheter.customer.beans.security.UserDetailsImpl;
 import com.acheter.customer.dto.account.UserAccountDto;
 import com.acheter.customer.service.account.AccountService;
 
-//this class will be called by authentication manager
-
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 	private static final Logger logger = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
@@ -22,7 +20,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Autowired
 	private AccountService accountService;
 
-	//Here email address will be considered as username
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserAccountDto userAccount = null;

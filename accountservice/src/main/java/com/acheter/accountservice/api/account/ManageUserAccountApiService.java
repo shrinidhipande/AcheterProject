@@ -35,15 +35,17 @@ import com.acheter.accountservice.utils.AccountServiceConstants;
 @RequestMapping("/account")
 public class ManageUserAccountApiService {
 	private final static Logger logger = LoggerFactory.getLogger(ManageUserAccountApiService.class);
-	@Autowired
-	private AccountService accountService;
-	
+
 	@Autowired
 	private MessageSource messageSource;
 
+	@Autowired
+	private AccountService accountService;
+
 	@PostMapping(value = "/customer/new", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
 			MediaType.TEXT_PLAIN_VALUE })
-	public ResponseEntity<String> newCustomer(@RequestBody UserAccountDto userAccount) {
+	public ResponseEntity<String> newCustomer(@RequestBody UserAccountDto userAccount)
+			throws EmailNotificationFailedException {
 		long accountNo = 0;
 		logger.trace("entered into newCustomer() method");
 
@@ -78,8 +80,7 @@ public class ManageUserAccountApiService {
 		logger.info("found {} customer accounts for an displayName: {}", count, displayName);
 		return ResponseEntity.ok(String.valueOf(count));
 	}
-	
-	
+
 	@GetMapping(value = "/new/{userAccountNo}/{emailVerificationCode}/verifyEmail", produces = {
 			MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<AccountVerificationStatusDto> verifyEmailAddressAndActivateAccount(
@@ -104,15 +105,17 @@ public class ManageUserAccountApiService {
 		return ResponseEntity.ok(accountVerificationStatusDto);
 	}
 
-	
-	/*
-	 * Forgot Password API
-	 * -----------------------------------------------------------------------------------------------------
-	 * */
-	
-	@PutMapping(value="/forgotpassword", consumes= {MediaType.APPLICATION_JSON_VALUE}, produces= {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> userForgotPasswordRegenerateCode(@RequestBody ForgotPasswordDto forgotPasswordDto) throws UserAccountNotFoundException{
-		
+	/**
+	 * Forgot password api
+	 * ---------------------------------------------------------------------------------------------------
+	 * 
+	 * @throws UserAccountNotFoundException
+	 * @throws EmailNotificationFailedException
+	 */
+	@PutMapping(value = "/forgotpassword", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+			MediaType.TEXT_PLAIN_VALUE, MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<String> userForgotPasswordRegenerateCode(@RequestBody ForgotPasswordDto forgotPasswordDto)
+			throws UserAccountNotFoundException, EmailNotificationFailedException {
 		long userAccountNo = 0;
 
 		logger.trace("received api call for verifying and regenerating the code");
@@ -120,8 +123,8 @@ public class ManageUserAccountApiService {
 		logger.debug("found system user id :{} and regenerated the codes", userAccountNo);
 
 		return ResponseEntity.ok(String.valueOf(userAccountNo));
-		
 	}
+
 	@GetMapping(value = "/forgotpassword/{userAccountNo}/{emailVerificationCode}/verifyEmail", produces = {
 			MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<UserAccountDto> forgotPasswordVerifyEmailVerificationCode(
@@ -163,7 +166,7 @@ public class ManageUserAccountApiService {
 
 		return ResponseEntity.ok(userAccountDto);
 	}
-	
+
 	@PutMapping(value = "/resetpassword", consumes = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<?> resetPassword(@RequestBody ResetPasswordDto resetPasswordDto) {
 		int c = 0;
@@ -175,7 +178,7 @@ public class ManageUserAccountApiService {
 		}
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 	}
-	
+
 	@GetMapping(value = "/email/{emailAddress}/details", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<UserAccountDto> getUserAccount(@PathVariable("emailAddress") String emailAddress)
 			throws UserAccountNotFoundException {
@@ -189,7 +192,7 @@ public class ManageUserAccountApiService {
 		logger.info("received api request for fetching user account based on userAccountNo : {}", userAccountNo);
 		return ResponseEntity.ok(accountService.getUserAccount(userAccountNo));
 	}
-	
+
 	@ExceptionHandler({ UserAccountNotFoundException.class })
 	public ResponseEntity<List<AcheterError>> handleUserAccountNotFoundException(UserAccountNotFoundException e) {
 		logger.error("reporting error response for user account not found exception");
@@ -212,4 +215,5 @@ public class ManageUserAccountApiService {
 				.body(e.getErrors());
 
 	}
+
 }

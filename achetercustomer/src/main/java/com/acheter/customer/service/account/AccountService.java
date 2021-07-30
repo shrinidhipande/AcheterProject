@@ -15,7 +15,7 @@ import com.acheter.customer.feign.configuration.FeignAccountServiceClientConfigu
 import com.acheter.customer.form.account.ForgotPasswordForm;
 import com.acheter.customer.form.account.ResetPasswordForm;
 
-@FeignClient(name = "accountService", url = "${accountService.url}/account" , configuration=FeignAccountServiceClientConfiguration.class)
+@FeignClient(name = "accountService", url = "${accountService.url}/account", configuration = FeignAccountServiceClientConfiguration.class)
 public interface AccountService {
 	@GetMapping(value = "/emailAddress/count", produces = { MediaType.TEXT_PLAIN_VALUE })
 	public String countCustomerByEmailAddress(@RequestParam("emailAddress") String emailAddress);

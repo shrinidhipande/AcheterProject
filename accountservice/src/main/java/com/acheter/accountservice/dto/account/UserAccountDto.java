@@ -16,6 +16,8 @@ public class UserAccountDto {
 	protected String mobileNo;
 	protected String password;
 	protected String roleName;
+	protected int emailVerificationStatus;
+	protected int otpCodeStatus;
 	protected String status;
 
 }

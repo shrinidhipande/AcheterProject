@@ -4,23 +4,46 @@ spring:
   application:
     name: accountservice
   messages:
-    basename: messages  
+    basename: messages
   datasource:
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/acheteraccountservicedb
-      username: root
-      password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/acheteraccountservicedb
+    username: root
+    password: root
   jpa:
     generate-ddl: false
     show-sql: true
     properties:
       hibernate.dialect: org.hibernate.dialect.MySQL8Dialect
       
-      
+springdoc:
+  api-docs:
+    path: /apidoc
+  swagger-ui:
+    path: /swagger-ui.html
+    
+notification:
+  apiURL: http://localhost:8878    
+  fromAddress: noreply@acheter.com
+  
+acheter:
+  customer:
+    baseURL: http://localhost:8080     
+    
+
 logging:
+  level:
+    root: INFO
+    '[com.acheter.accountservice]': debug
   file:
-    path: /var/log/acheter
+    path: /var/log/acheter/
     name: ${logging.file.path}/accountservice.log
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %logger{36} - %msg%n"
-    file: "%d{yyyy-MM-dd HH:mm:ss} -[%thread] -%-5level -%logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} - [%thread] - %-5level - %logger{36} - %msg%n"
+    
+    
+    
+    
+    
+    

@@ -18,6 +18,8 @@ public class AccountMapper {
 			userAccountDto.setPassword(systemUser.getPassword());
 			userAccountDto.setStatus(systemUser.getStatus());
 			userAccountDto.setRoleName(systemUser.getUserRole().getRoleName());
+			userAccountDto.setEmailVerificationStatus(systemUser.getEmailVerificationStatus());
+			userAccountDto.setOtpCodeStatus(systemUser.getOtpCodeStatus());
 		}
 
 		return userAccountDto;

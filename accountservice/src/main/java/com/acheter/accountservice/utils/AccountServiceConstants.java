@@ -2,10 +2,9 @@ package com.acheter.accountservice.utils;
 
 public interface AccountServiceConstants {
 	String ROLE_CUSTOMER = "customer";
-	
+
 	String STATUS_USER_NEW = "N";
 	String STATUS_USER_ACTIVE = "A";
-	
 
 	String SYSTEM_USER = "system";
 
@@ -16,4 +15,7 @@ public interface AccountServiceConstants {
 	
 	String ERR_CODE_OTP_CODE_FAILED = "203";
 	String ERR_CODE_OTP_CODE_FAILED_KEY = "otpCode.failed";
+	
+	String ERR_EMAIL_NOTIFICATION_FAILED = "300";
+	String ERR_EMAIL_NOTIFICATION_FAILED_KEY = "emailNotification.failed";
 }

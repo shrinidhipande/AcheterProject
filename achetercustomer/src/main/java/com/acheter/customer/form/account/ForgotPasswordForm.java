@@ -1,6 +1,5 @@
 package com.acheter.customer.form.account;
 
-
 import lombok.Data;
 
 @Data
