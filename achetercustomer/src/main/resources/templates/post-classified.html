@@ -1,0 +1,267 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/fullpagelayout.html}">
+
+<head>
+	<title>Post Classified</title>
+</head>
+
+<th:block layout:fragment="breadcrum">
+	<div class="page-header" th:style="@{background: ~/assets/img/banner1.jpg;}">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="breadcrumb-wrapper">
+						<h2 class="product-title">Post Classified</h2>
+						<ol class="breadcrumb">
+							<li><a th:href="@{~/customer/login}">Home /</a></li>
+							<li class="current">Post Classified</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+
+<th:block layout:fragment="pagecontent">
+	<div id="content" class="section-padding">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12 col-md-4 col-lg-3 page-sidebar">
+					<aside>
+						<div class="sidebar-box">
+							<div class="user">
+								<figure>
+									<a href="#"><img th:src="@{~/assets/img/author/img1.jpg}" alt=""></a>
+								</figure>
+								<div class="usercontent">
+									<h3>Hello William!</h3>
+									<h4>Administrator</h4>
+								</div>
+							</div>
+							<nav class="navdashboard">
+								<ul>
+									<li>
+										<a href="#">
+											<i class="lni-dashboard"></i>
+											<span>Dashboard</span>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<i class="lni-layers"></i>
+											<span>My Classifeds</span>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<i class="lni-envelope"></i>
+											<span>My DirectSell</span>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<i class="lni-wallet"></i>
+											<span>My Exchange Products</span>
+										</a>
+									</li>
+									<li>
+										<a href="@{~/logout}">
+											<i class="lni-enter"></i>
+											<span>Logout</span>
+										</a>
+									</li>
+								</ul>
+							</nav>
+						</div>
+						<div class="widget">
+							<h4 class="widget-title">Classified</h4>
+							<div class="add-box">
+								<img class="img-fluid" th:src="@{~/assets/img/img1.jpg}" alt="">
+							</div>
+						</div>
+					</aside>
+				</div>
+				<div class="col-sm-12 col-md-8 col-lg-9">
+					<form name="classifiedForm" th:object="${classifiedForm}" method="post"
+						enctype="multipart/form-data">
+						<div class="row page-content">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-7">
+								<div class="inner-box">
+									<div class="dashboard-box">
+										<h2 class="dashbord-title">Classified Detail</h2>
+									</div>
+									<div class="dashboard-wrapper">
+										<div class="form-group mb-3">
+											<label class="control-label">Title</label>
+											<input class="form-control input-md" name="title" placeholder="Title"
+												type="text" th:field="*{title}">
+											<p class="alert alert-danger" th:errors="*{title}" th:if="${#fields.hasErrors('title')}"}>&nbsp;</p>
+										</div>
+										<div class="form-group mb-3">
+											<label class="control-label">Description</label>
+											<input class="form-control input-md" name="description" placeholder="Description"
+												type="text" th:field="*{description}">
+											<p class="alert alert-danger" th:errors="*{description}" th:if="${#fields.hasErrors('description')}"}>&nbsp;</p>
+										</div>
+										<div class="form-group mb-3 tg-inputwithicon">
+											<label class="control-label">Categories</label>
+											<div class="tg-select form-control">
+												<select name="categoryId" th:field="*{categoryId}">
+													<option value="-1">Select Categories</option>
+													<option th:value="${category.categoryId}" th:text="${category.categoryName}" th:each="category:${categories}"></option>													
+												</select>												
+											</div>
+											<p class="alert alert-danger" th:errors="*{categoryId}" th:if="${#fields.hasErrors('categoryId')}"}>&nbsp;</p>
+										</div>										
+										<div class="form-group mb-3 tg-inputwithicon">
+											<label class="control-label">Classified Type</label>
+											<div class="tg-select form-control">
+												<select name="classifiedTypeId" th:field="*{classifiedTypeId}">
+													<option value="-1">Select Classfied Type</option>
+													<option th:value="${classifiedType.classifiedTypeId}" th:text="${classifiedType.classifiedTypeName}" th:each="classifiedType:${classifiedTypes}"></option>													
+												</select>
+											</div>
+											<p class="alert alert-danger" th:errors="*{classifiedTypeId}" th:if="${#fields.hasErrors('classifiedTypeId')}"}>&nbsp;</p>
+										</div>
+										<div class="form-group mb-3">
+											<label class="control-label">Price</label>
+											<input class="form-control input-md" name="price" placeholder="Price"
+												type="text" th:field="*{price}">
+											<p class="alert alert-danger" th:errors="*{price}" th:if="${#fields.hasErrors('price')}"}>&nbsp;</p>
+										</div>
+										
+										
+										<label class="tg-fileuploadlabel" for="tg-photogallery">
+											<span>Drop files anywhere to upload</span>
+											<span>Or</span>
+											<span class="btn btn-common">Select Files</span>
+											<span>Maximum upload file size: 500 KB</span>
+											<input id="tg-photogallery" class="tg-fileinput" type="file" name="classifiedImageFile">
+											<p class="alert alert-danger" th:text="${classifiedImageFileError}" th:if="${classifiedImageFileError != null}"}>&nbsp;</p>											
+										</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-5">
+								<div class="inner-box">
+									<div class="tg-contactdetail">
+										<div class="dashboard-box">
+											<h2 class="dashbord-title">Contact Detail</h2>
+										</div>
+										<div class="dashboard-wrapper">
+											
+											<div class="form-group mb-3">
+												<label class="control-label">Phone*</label>
+												<input class="form-control input-md" name="secondaryContactNo" type="text" th:field="*{secondaryContactNo}">
+												<p class="alert alert-danger" th:errors="*{secondaryContactNo}" th:if="${#fields.hasErrors('secondaryContactNo')}"}>&nbsp;</p>
+												
+											</div>
+											<div class="form-group mb-3">
+												<label class="control-label">Email Address</label>
+												<input class="form-control input-md" name="secondaryEmailAddress" type="text" th:field="*{secondaryEmailAddress}">
+												<p class="alert alert-danger" th:errors="*{secondaryEmailAddress}" th:if="${#fields.hasErrors('secondaryEmailAddress')}"}>&nbsp;</p>
+											</div>
+											<div class="form-group mb-3">
+												<label class="control-label">Building/Apartment Name</label>
+												<input class="form-control input-md" name="addressLine1" type="text" th:field="*{addressLine1}">
+												<p class="alert alert-danger" th:errors="*{addressLine1}" th:if="${#fields.hasErrors('addressLine1')}"}>&nbsp;</p>
+											</div>
+											<div class="form-group mb-3">
+												<label class="control-label">Street Address</label>
+												<input class="form-control input-md" name="addressLine2" type="text" th:field="*{addressLine2}">
+												<p class="alert alert-danger" th:errors="*{addressLine2}" th:if="${#fields.hasErrors('addressLine2')}"}>&nbsp;</p>
+											</div>
+											
+											<div class="form-group mb-3 tg-inputwithicon">
+												<label class="control-label">State</label>
+												<div class="tg-select form-control">
+													<select name="state" th:field="*{state}">
+														<option value="-1">Select State</option>
+														<option th:value="${state}" th:text="${state}" th:each="state:${states}">Select State</option>
+													</select>
+												</div>
+												<p class="alert alert-danger" th:errors="*{state}" th:if="${#fields.hasErrors('state')}"}>&nbsp;</p>
+											</div>
+											<div class="form-group mb-3 tg-inputwithicon">
+												<label class="control-label">City</label>
+												<div class="tg-select form-control">
+													<select id="city" name="city" th:field="*{city}" onchange="javascript:populateServiceAreas()">
+														<option value="-1">Select City</option>
+														<option th:value="${city}" th:text="${city}" th:each="city:${cities}">Select State</option>														
+													</select>
+												</div>
+												<p class="alert alert-danger" th:errors="*{city}" th:if="${#fields.hasErrors('city')}"}>&nbsp;</p>
+											</div>
+											<div class="form-group mb-3 tg-inputwithicon">
+												<label class="control-label">Service Area</label>
+												<div class="tg-select form-control">
+													<select id="serviceAreaId" name="serviceAreaId" th:field="*{serviceAreaId}">
+														<option value="-1">Select Service Area</option>																												
+													</select>
+												</div>
+												<p class="alert alert-danger" th:errors="*{serviceAreaId}" th:if="${#fields.hasErrors('serviceAreaId')}"}>&nbsp;</p>
+											</div>
+											<div class="form-group mb-3">
+												<label class="control-label">Zip</label>
+												<input class="form-control input-md" name="zip" type="text" th:field="*{zip}">
+												<p class="alert alert-danger" th:errors="*{zip}" th:if="${#fields.hasErrors('zip')}"}>&nbsp;</p>
+											</div>
+											<div class="form-group mb-3">
+												<label class="control-label">Country</label>
+												<input class="form-control input-md" name="country" type="text" th:field="*{country}">
+												<p class="alert alert-danger" th:errors="*{country}" th:if="${#fields.hasErrors('country')}"}>&nbsp;</p>
+											</div>
+											<div class="tg-checkbox">
+												<div class="custom-control custom-checkbox">
+													<input type="checkbox" class="custom-control-input"
+														id="tg-agreetermsandrules" name="termsAndConditions" th:field="*{termsAndConditions}" value="1">
+													<label class="custom-control-label" for="tg-agreetermsandrules">I
+														agree
+														to all <a href="javascript:void(0);">Terms of Use &amp; Posting
+															Rules</a></label>
+													<p class="alert alert-danger" th:errors="*{termsAndConditions}" th:if="${#fields.hasErrors('termsAndConditions')}"}>&nbsp;</p>
+												</div>
+											</div>
+											<button class="btn btn-common" type="submit">Post Ad</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+
+<th:block layout:fragment="script">
+			
+            <script>
+				$(document).ready(function () {					
+					populateServiceAreas();
+				});
+				function populateServiceAreas() {
+					var httpUrl = "http://localhost:8080/classified/";
+					var option = null;
+					httpUrl += $("#city").val() + "/serviceAreas"
+
+					$("#serviceAreaId option[value != '-1']").remove();
+
+					$.get(httpUrl, function (data) {
+						for (var i = 0; data.length; i++) {
+							var serviceArea = data[i];
+							option = document.createElement("option");
+							option.value = serviceArea.serviceAreaId;
+							option.text = serviceArea.areaName;
+							$("#serviceAreaId").append(option);
+						}
+
+					});
+				}
+			</script>
+</th:block>
+
+</html>

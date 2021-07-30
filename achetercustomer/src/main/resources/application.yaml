@@ -1,11 +1,28 @@
 spring:
   mvc:
     static-path-pattern: /assets/**
-    
+  messages:
+    basename: errors,messages  
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 128KB
+      max-request-size: 128KB
+          
 accountService:
-  url: http://localhost:8081/account/
+  url: http://localhost:8081
+  apiKey: acheter_customer_web
+  secret: Abcd1234@
+adsTradingService:
+  url: http://localhost:8082
+  apiKey: adstradingservice
+  secret: welcome1  
+  
   
 logging:
+  level: 
+    root: info
+    '[com.acheter.customer]': debug
   file:
     path: /var/log/acheter
     name: ${logging.file.path}/achetercustomer.out

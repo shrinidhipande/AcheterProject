@@ -33,7 +33,7 @@
 						<h3>
 							Customer Registration
 						</h3>
-						<form class="login-form" th:action="@{/customer/register}" method="post" th:object="${customerRegistrationForm}"> <!--This Object is used to retain the data previously entered by the user in case od validation errors-->
+						<form class="login-form" th:action="@{/customer/register}" method="post" th:object="${customerRegistrationForm}">
 							<div class="form-group">
 								<div class="input-icon">
 									<i class="lni-user"></i>
@@ -100,7 +100,7 @@
 							</div>
 							<div class="text-center">
 								<button class="btn btn-common log-btn">Register</button>
-								<button class="btn btn-danger">Cancel</button>
+								<a th:href="@{/acheter-home}" class="btn btn-danger">Cancel</a>
 							</div>
 						</form>
 					</div>

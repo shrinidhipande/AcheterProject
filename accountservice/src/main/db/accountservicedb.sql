@@ -41,6 +41,31 @@ CREATE TABLE `address` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `api_users`
+--
+
+DROP TABLE IF EXISTS `api_users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `api_users` (
+  `api_user_id` int NOT NULL,
+  `api_key` varchar(50) NOT NULL,
+  `secret` varchar(299) NOT NULL,
+  `status` varchar(1) NOT NULL,
+  `user_role` int DEFAULT NULL,
+  `created_dt` datetime DEFAULT NULL,
+  `created_by` varchar(100) DEFAULT NULL,
+  `last_modified_dt` datetime DEFAULT NULL,
+  `last_modified_by` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`api_user_id`),
+  UNIQUE KEY `api_user_id_UNIQUE` (`api_user_id`),
+  UNIQUE KEY `api_key_UNIQUE` (`api_key`),
+  KEY `user_key_role_idx` (`user_role`),
+  CONSTRAINT `user_key_role` FOREIGN KEY (`user_role`) REFERENCES `user_role` (`role_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `cities`
 --
 
@@ -51,7 +76,7 @@ CREATE TABLE `cities` (
   `city_id` int NOT NULL AUTO_INCREMENT,
   `city_name` varchar(100) NOT NULL,
   PRIMARY KEY (`city_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -288,7 +313,7 @@ CREATE TABLE `system_users` (
   `mobile_no` varchar(13) DEFAULT NULL,
   `first_nm` varchar(50) DEFAULT NULL,
   `last_nm` varchar(50) DEFAULT NULL,
-  `password` varchar(50) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
   `display_nm` varchar(50) DEFAULT NULL,
   `email_verification_code` varchar(50) DEFAULT NULL,
   `email_verification_code_generated_dt` date DEFAULT NULL,
@@ -298,15 +323,17 @@ CREATE TABLE `system_users` (
   `status` char(1) DEFAULT NULL,
   `created_dt` datetime DEFAULT NULL,
   `created_by` varchar(50) DEFAULT NULL,
-  `last_modified_date` datetime DEFAULT NULL,
+  `last_modified_dt` datetime DEFAULT NULL,
   `last_modified_by` varchar(30) DEFAULT NULL,
+  `email_verification_code_status` tinyint(1) DEFAULT NULL,
+  `otp_code_status` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`system_user_id`),
   UNIQUE KEY `email_address_UNIQUE` (`email_address`),
   UNIQUE KEY `mobile_no_UNIQUE` (`mobile_no`),
   UNIQUE KEY `display_name_UNIQUE` (`display_nm`),
   KEY `user_role_id_idx` (`user_role_id`),
   CONSTRAINT `user_role_id` FOREIGN KEY (`user_role_id`) REFERENCES `user_role` (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -321,8 +348,8 @@ CREATE TABLE `user_details` (
   `dob` date DEFAULT NULL,
   `gender` varchar(15) DEFAULT NULL,
   `contact_details_id` int DEFAULT NULL,
-  `csr_primary_address_id` int DEFAULT NULL,
-  `csr_secondary_address_id` int DEFAULT NULL,
+  `csr_primary_address_id` varchar(100) DEFAULT NULL,
+  `csr_secondary_address_id` varchar(100) DEFAULT NULL,
   `identity_proof_type_id` int DEFAULT NULL,
   `identity_proof_value` varchar(100) DEFAULT NULL,
   `issued_authority` varchar(100) DEFAULT NULL,
@@ -334,12 +361,8 @@ CREATE TABLE `user_details` (
   PRIMARY KEY (`system_user_id`),
   KEY `contact_details_id_idx` (`contact_details_id`),
   KEY `identity_proof_type_id_idx` (`identity_proof_type_id`),
-  KEY `primary_address_id_fk_idx` (`csr_primary_address_id`),
-  KEY `csr_secondary_address_id_fk_idx` (`csr_secondary_address_id`),
   CONSTRAINT `contact_details_id` FOREIGN KEY (`contact_details_id`) REFERENCES `contact_details` (`contact_details_id`),
-  CONSTRAINT `csr_secondary_address_id_fk` FOREIGN KEY (`csr_secondary_address_id`) REFERENCES `address` (`address_id`),
   CONSTRAINT `identity_proof_type_id` FOREIGN KEY (`identity_proof_type_id`) REFERENCES `identity_proof_type` (`identity_proof_type_id`),
-  CONSTRAINT `primary_address_id_fk` FOREIGN KEY (`csr_primary_address_id`) REFERENCES `address` (`address_id`),
   CONSTRAINT `system_user_id` FOREIGN KEY (`system_user_id`) REFERENCES `system_users` (`system_user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -361,12 +384,8 @@ CREATE TABLE `user_role` (
   `last_modified_by` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`role_id`),
   UNIQUE KEY `role_nm_UNIQUE` (`role_nm`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping routines for database 'accountservicedb'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -377,4 +396,4 @@ CREATE TABLE `user_role` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-12 20:36:50
+-- Dump completed on 2021-07-11 22:07:41

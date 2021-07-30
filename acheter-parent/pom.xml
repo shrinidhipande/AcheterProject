@@ -21,13 +21,13 @@
 		<mysql.version>8.0.25</mysql.version>
 	</properties>
 	
-	<distributionManagement>
+	<!-- <distributionManagement>
 		<repository>
 			<id>central</id>
 			<name>sforce-dev-repo</name>
 			<url>http://www.repo.s-force.org/artifactory/sforce-dev-repo/</url>
 		</repository>
-	</distributionManagement>
+	</distributionManagement>-->
 	
 	<dependencyManagement>
 		<dependencies>

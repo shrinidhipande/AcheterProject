@@ -11,5 +11,7 @@ public class ResetPasswordForm {
 	private String password;
 	@NotBlank
 	private String reTypePassword;
+	private String emailVerificationCode;
+	private String otpCode;
 
 }

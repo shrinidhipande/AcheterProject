@@ -1,0 +1,71 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/fullpagelayout.html}">
+
+<head>
+	<title>Login</title>
+</head>
+
+<th:block layout:fragment="breadcrum">
+	<div class="page-header" th:style="@{background: ~/assets/img/banner1.jpg;}">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="breadcrumb-wrapper">
+						<h2 class="product-title">Login</h2>
+						<ol class="breadcrumb">
+							<li><a th:href="@{~/acheter-home}">Home /</a></li>
+							<li class="current">Login</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+
+<th:block layout:fragment="pagecontent">
+	<section class="login section-padding">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-5 col-md-12 col-xs-12">
+					<div class="login-form login-area">
+						<h3>
+							Login Now
+						</h3>
+						<form role="form" class="login-form" th:action="@{~/authenticate}" method="post">
+							<div class="form-group" th:if="${param.error != null}">
+								<div class="input-icon">
+									<p class="alert alert-danger" th:if="${param.error[0]} == 'bad'">Email Address or Password is in-correct</p>
+									<p class="alert alert-danger" th:if="${param.error[0]} == 'locked'">Your account got locked, please reach to administrator</p>
+									<p class="alert alert-danger" th:if="${param.error[0]} == 'disabled'">Your account was not activated or disabled, please activate your account or reach to administrator</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="input-icon">
+									<i class="lni-user"></i>
+									<input type="email" id="emailAddress" class="form-control" name="emailAddress"
+										placeholder="Email Address">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="input-icon">
+									<i class="lni-lock"></i>
+									<input type="password" class="form-control" name="password" id="password" placeholder="Password">
+								</div>
+							</div>
+							<div class="form-group mb-3">
+								<a class="forgetpassword" th:href="@{/customer/forgotpassword}">Forgot Password?</a>
+							</div>
+							<div class="text-center">
+								<button class="btn btn-common log-btn">Login</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</th:block>
+
+</html>

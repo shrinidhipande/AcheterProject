@@ -38,10 +38,14 @@ public class SystemUser implements Serializable {
 	protected String emailVerificationCode;
 	@Column(name = "email_verification_code_generated_dt")
 	protected Date emailVerificationCodeGeneratedDate;
+	@Column(name = "email_verification_code_status")
+	protected int emailVerificationStatus;
 	@Column(name = "otp_code")
 	protected String otpCode;
 	@Column(name = "otp_code_generated_dt")
 	protected Date otpCodeGeneratedDate;
+	@Column(name = "otp_code_status")
+	protected int otpCodeStatus;
 	protected String status;
 	@Column(name = "created_dt")
 	protected Date createdDate;

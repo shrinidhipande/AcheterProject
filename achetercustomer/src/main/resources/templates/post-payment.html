@@ -1,0 +1,113 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/fullpagelayout.html}">
+
+<head>
+	<title>Payment</title>
+</head>
+
+
+<th:block layout:fragment="breadcrum">
+	<div class="page-header" th:style="@{background: ~/assets/img/banner1.jpg;}">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="breadcrumb-wrapper">
+						<h2 class="product-title">Post Payment</h2>
+						<ol class="breadcrumb">
+							<li><a th:href="@{~/classified/new}">Post Classified /</a></li>
+							<li class="current">Payment</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+
+<th:block layout:fragment="pagecontent">
+	<section class="section-padding">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-12 col-md-12 col-xs-12">
+					<div class="forgot login-area">
+						<h3>
+							Classified Payment
+						</h3>
+						Your classified <span th:text="${title}">title</span> has been selected by you, to be posted as
+						<span th:text="${classifiedType}">type</span>, for which
+						amount of <span th:text="${amount}">Charge</span> has to be paid, please click on <button
+							id="rzp-button1">Pay</button> button to
+						proceed.
+						otherwise click <a th:href="@{~/acheter-home}">cancel</a> to stop posting the classified.
+					</div>
+				</div>
+			</div>
+		</div>
+		<form id="paymentForm" th:action="@{~/classified/updatePaymentDetails}" method="post">
+			<input type="hidden" name="orderId" th:value="${orderId}"/>
+			<input type="hidden" name="postId" th:value="${postId}"/>
+			<input type="hidden" name="paymentId" id="paymentId"/>
+		</form>
+		
+	</section>
+</th:block>
+
+
+<th:block layout:fragment="script">
+
+
+	<script th:inline="javascript">
+		var orderId = [[${orderId}]];
+		var amount = [[${amount}]];
+		var classifiedType = [[${classifiedType}]];
+		var emailAddress = [[${emailAddress}]];
+		var mobileNo = [[${mobileNo}]];
+	</script>
+	
+	<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+	<script>
+		var options = {
+			"key": "rzp_test_4KwcmUmPsg1Urx", // Enter the Key ID generated from the Dashboard
+			"amount": amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+			"currency": "INR",
+			"name": "Acheter.com",
+			"description": classifiedType + " Classified Transaction",
+			"image": "https://example.com/your_logo",
+			"order_id": orderId, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+			"handler": function (response) {
+				//alert(response.razorpay_payment_id);
+				//alert(response.razorpay_order_id);
+				//alert(response.razorpay_signature)
+				document.getElementById("paymentId").value =response.razorpay_payment_id;
+				document.forms['paymentForm'].submit(); 
+			},
+			"prefill": {				
+				"email": emailAddress,
+				"contact": mobileNo
+			},
+			"notes": {
+				"address": "Razorpay Corporate Office"
+			},
+			"theme": {
+				"color": "#3399cc"
+			}
+		};
+		var rzp1 = new Razorpay(options);
+		rzp1.on('payment.failed', function (response) {
+			alert(response.error.code);
+			alert(response.error.description);
+			alert(response.error.source);
+			alert(response.error.step);
+			alert(response.error.reason);
+			alert(response.error.metadata.order_id);
+			alert(response.error.metadata.payment_id);
+		});
+		document.getElementById('rzp-button1').onclick = function (e) {
+			rzp1.open();
+			e.preventDefault();
+		}
+	</script>
+</th:block>
+
+</html>
